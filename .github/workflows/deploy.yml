@@ -1,0 +1,21 @@
+
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      deploy_dir:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, ds]
+    steps:
+      - uses: actions/checkout@v2
+      - name: copiar a carpeta deploy
+        # https://stackoverflow.com/a/15373763 para entender lo del --filter
+        run: |
+          mkdir -p ${{ inputs.deploy_dir }}
+          rsync -vhPrl --delete-after --filter=":e- .gitignore" --filter "- .git/" . ${{ inputs.deploy_dir }}
+
