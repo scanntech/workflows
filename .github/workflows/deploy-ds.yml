@@ -10,11 +10,17 @@ on:
 
 jobs:
   deploy:
+
+    # como es público y usa runners en nuestro servidor no queremos que lo pueda correr cualquiera
+    # requerimos también que la ruta de deploy sea absoluta
+    if: (github.repository_owner == scanntech) && (startsWith(inputs.deploy_dir, /))
+
     runs-on: [self-hosted, ds]
+
     steps:
       - uses: actions/checkout@v2
       - name: copiar a carpeta deploy
         # https://stackoverflow.com/a/15373763 para entender lo del --filter
         run: |
           mkdir -p ${{ inputs.deploy_dir }}
-          rsync -vhPrl --delete-after --filter=":e- .gitignore" --filter "- .git/" . ${{ inputs.deploy_dir }}
+          rsync -vhrl --delete-after --filter=":e- .gitignore" --filter "- .git/" . ${{ inputs.deploy_dir }}
