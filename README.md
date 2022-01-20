@@ -14,7 +14,7 @@ Clona el proyecto al servidor y copia lo necesario a la carpeta destino.
 > Importante: Borra archivos no trackeados que no estén en el .gitignore
 
 - `inputs`:
-  - `deploy_dir`: carpeta destino en `ds-enorme`
+  - `deploy_dir`: carpeta destino en `ds-enorme`, tiene que ser una **ruta absoluta** (sino no corre)
 
 **Ejemplo de uso**
 ```yaml
@@ -61,5 +61,5 @@ jobs:
     with:
       username: kevin
     secrets:
-      token: ${{ secretos.clave }}
+      token: shhh
 ```
