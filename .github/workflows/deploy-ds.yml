@@ -7,14 +7,34 @@ on:
       deploy_dir:
         required: true
         type: string
+      # elementos que no se quieran borrar en el destino
+      # o elementos que no se quieran copiar al destino (raro)
+      # separados por coma y sin espacios por favor
+      exclusiones:
+        required: false
+        type: string
+        default: ''
 
 jobs:
   deploy:
+
+    # como es público y usa runners en nuestro servidor no queremos que lo pueda correr cualquiera
+    # requerimos también que la ruta de deploy sea absoluta
+    if: (github.repository_owner == 'scanntech') && (startsWith(inputs.deploy_dir, '/'))
+
     runs-on: [self-hosted, ds]
+
     steps:
       - uses: actions/checkout@v2
       - name: copiar a carpeta deploy
-        # https://stackoverflow.com/a/15373763 para entender lo del --filter
+        # Opciones de rsync:
+        # -v verbose
+        # -h human readable
+        # -c decide que sincronizar según checksum en vez de mod-time y size
+        # -r recursivo
+        # -l symlinks tratados como symlinks (si apunta a una carpeta no sincroniza sus contenidos)
+        # --delete borra lo que sobre en el destino
+        # --exclude ignora para mandar *y* para borrar en el destino
         run: |
           mkdir -p ${{ inputs.deploy_dir }}
-          rsync -vhPrl --delete-after --filter=":e- .gitignore" --filter "- .git/" . ${{ inputs.deploy_dir }}
+          rsync -vhcrl --delete --exclude=.git/ --exclude={${{ inputs.exclusiones }}} . ${{ inputs.deploy_dir }}
