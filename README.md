@@ -13,8 +13,6 @@ Clona el proyecto al servidor y copia lo necesario a la carpeta destino.
 
 > Importante: Borra archivos no trackeados que no estén excluidos explícitamente
 
-Archivos necesarios (e.g. credenciales) que no se agregan al repositorio tienen 
-
 - `inputs`:
   - `deploy_dir`: carpeta destino en `ds-enorme`, tiene que ser una **ruta absoluta** (sino no corre).
   - `exclusiones`: los elementos que no se quieran borrar en el destino o que no se quieran copiar al destino (raro).
