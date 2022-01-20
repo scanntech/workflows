@@ -45,12 +45,12 @@ jobs:
 on:
   workflow_call:
     inputs:
-          username:
-            required: true
-            type: string
-        secrets:
-          token:
-            required: true
+      username:
+        required: true
+        type: string
+    secrets:
+      token:
+        required: true
 ```
 ## Uso
 
@@ -61,7 +61,7 @@ on:
 ```yaml
 jobs:
   llamar-workflow-con-inputs:
-    uses: scanntech/workflows/.github/workflows/ejemplo.yml@master # @master es implícito, se puede usar otra @rama o @tag
+    uses: scanntech/workflows/.github/workflows/ejemplo.yml@master # se puede usar otra @rama o @tag
     with:
       username: kevin
     secrets:
