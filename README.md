@@ -11,10 +11,15 @@
 
 Clona el proyecto al servidor y copia lo necesario a la carpeta destino.
 
-> Importante: Borra archivos no trackeados que no estén en el .gitignore
+> Importante: Borra archivos no trackeados que no estén excluidos explícitamente
+
+Archivos necesarios (e.g. credenciales) que no se agregan al repositorio tienen 
 
 - `inputs`:
-  - `deploy_dir`: carpeta destino en `ds-enorme`, tiene que ser una **ruta absoluta** (sino no corre)
+  - `deploy_dir`: carpeta destino en `ds-enorme`, tiene que ser una **ruta absoluta** (sino no corre).
+  - `exclusiones`: los elementos que no se quieran borrar en el destino o que no se quieran copiar al destino (raro).
+    - relativos a la raíz del proyecto.
+    - separados por coma y sin espacios por favor.
 
 **Ejemplo de uso**
 ```yaml
@@ -31,6 +36,7 @@ jobs:
     uses: scanntech/workflows/.github/workflows/deploy-ds.yml@master
     with:
       deploy_dir: /u01/home/ds/deploy/prod/ejemplo 
+      exclusiones: 'env,secretos.txt'
 ```
 
 ## Creación de workflows
@@ -53,11 +59,11 @@ on:
 - Desde dónde se puede llamar?
     - Desde cualquier lado si es público *(este lo es)*.
     - Desde cualquier otro worklow del mismo repositorio si es privado.
-- Con `uses`
+- Con `uses`:
 ```yaml
 jobs:
   llamar-workflow-con-inputs:
-    uses: scanntech/workflows/.github/workflows/ejemplo.yml@master
+    uses: scanntech/workflows/.github/workflows/ejemplo.yml@master # @master es implícito, se puede usar otra @rama o @tag
     with:
       username: kevin
     secrets:
