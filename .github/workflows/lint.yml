@@ -1,0 +1,19 @@
+name: Lint
+on:
+  push
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+        bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        ${{ steps.get_actionlint.outputs.executable }}
+
+  reviewdog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest # Optional. [latest,nightly,v.X.Y.Z]
+      - run: reviewdog --version
