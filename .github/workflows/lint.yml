@@ -1,0 +1,13 @@
+name: reviewdog-actionlint
+
+on: [ pull_request ]
+
+#env:
+#  REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: reviewdog/action-actionlint@v1

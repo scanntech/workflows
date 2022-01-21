@@ -1,0 +1,28 @@
+name: Actualizar entorno de conda
+
+on:
+  workflow_call:
+    inputs:
+      env_dir:
+        required: true
+        type: string
+        description: Ruta absoluta de la carpeta para usar de prefijo
+      env_yml:
+        required: false
+        type: string
+        default: environment.yml
+        description: Archivo de definición del entorno, ruta relativa al repositorio
+
+jobs:
+  build:
+    # como es público y usa runners en nuestro servidor no queremos que lo pueda correr cualquiera
+    # la ruta del env_dir tiene que ser absoluta
+    # la ruta del env_yml tiene que ser relativa
+    if: github.repository_owner == 'scanntech' && startsWith(inputs.env_dir, '/') && !startsWith(inputs.env_yml, '/')
+
+    runs-on: [ self-hosted, ds ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: crear o actualizar entorno de desarrollo
+        run: |
+          conda env create -p ${{ inputs.env_dir }} -f ${{ inputs.env_yml }} || conda env update -p ${{ inputs.env_dir }} -f ${{ inputs.env_yml }}

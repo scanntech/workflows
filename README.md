@@ -5,7 +5,7 @@
 [Documentación oficial](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 
 
-## workflows
+## Workflows disponibles
 
 ### deploy-ds.yml
 
@@ -18,6 +18,7 @@ Clona el proyecto al servidor y copia lo necesario a la carpeta destino.
   - `exclusiones`: los elementos que no se quieran borrar en el destino o que no se quieran copiar al destino (raro).
     - relativos a la raíz del proyecto.
     - separados por coma y sin espacios por favor.
+    - con trailing comma aunque sea una sola exclusión!
 
 **Ejemplo de uso**
 ```yaml
@@ -34,25 +35,37 @@ jobs:
     uses: scanntech/workflows/.github/workflows/deploy-ds.yml@master
     with:
       deploy_dir: /u01/home/ds/deploy/prod/ejemplo 
-      exclusiones: 'env,secretos.txt'
+      exclusiones: 'env,secretos.txt,'
 ```
 
-## Creación de workflows
+### conda-env-ds.yml
 
-- Poner el `ejemplo.yml` en la carpeta `.github/workflows` de este repositorio.
-- Tiene que incluir `on/workflow_call` (puede aceptar `inputs` y/o `secrets`):
+Crea un prefijo de conda a partir de un environment.yml en la carpeta objetivo.
+
+> Si el prefijo ya existe entonces se actualiza
+
+- `inputs`:
+  - `env_dir`: carpeta destino en `ds-enorme`, tiene que ser una **ruta absoluta** (sino no corre).
+  - `env_yml`: Archivo de definición del entorno, ruta relativa al repositorio
+
+**Ejemplo de uso**
 ```yaml
+# scanntech/otro-repo/.github/workflows/conda.yml
+name: build conda
+
 on:
-  workflow_call:
-    inputs:
-      username:
-        required: true
-        type: string
-    secrets:
-      token:
-        required: true
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    uses: scanntech/workflows/.github/workflows/conda-env-ds.yml@master
+    with:
+      env_dir: /u01/home/ds/deploy/prod/ejemplo/env 
+      env_yml: environment.yml
 ```
-## Uso
+
+# Uso general
 
 - Desde dónde se puede llamar?
     - Desde cualquier lado si es público *(este lo es)*.
@@ -67,3 +80,7 @@ jobs:
     secrets:
       token: shhh
 ```
+
+## Creación de workflows reutilizables
+
+Ver [CREACION.md]
