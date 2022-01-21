@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-        ${{ steps.get_actionlint.outputs.executable }}
+          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ${{ steps.get_actionlint.outputs.executable }}
 
   reviewdog:
     runs-on: ubuntu-latest
