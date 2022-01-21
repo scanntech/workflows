@@ -7,13 +7,15 @@ on:
       deploy_dir:
         required: true
         type: string
+        description: carpeta donde se va a actualizar el código
       # elementos que no se quieran borrar en el destino
       # o elementos que no se quieran copiar al destino (raro)
       # separados por coma y sin espacios por favor
       exclusiones:
         required: false
         type: string
-        default: ''
+        default: '{,}'
+        description: elementos no trackeados que no deben ser borrados si existen en deploy_dir
 
 jobs:
   deploy:
@@ -37,4 +39,4 @@ jobs:
         # --exclude ignora para mandar *y* para borrar en el destino
         run: |
           mkdir -p ${{ inputs.deploy_dir }}
-          rsync -vhcrl --delete --exclude=.git/ --exclude={${{ inputs.exclusiones }}} . ${{ inputs.deploy_dir }}
+          rsync -vhcrl --delete --exclude=.git/ --exclude=${{ inputs.exclusiones }} . ${{ inputs.deploy_dir }}

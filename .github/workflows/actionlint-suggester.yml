@@ -1,0 +1,15 @@
+name: reviewdog-suggester
+on: [ pull_request ] # Support only pull_request event.
+jobs:
+  shell:
+    name: runner / suggester / actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: install actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+      - name: suggester / actionlint
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: actionlint

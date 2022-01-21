@@ -7,11 +7,13 @@ on:
       env_dir:
         required: true
         type: string
+        description: Carpeta para usar de prefijo
       # ruta relativa a la raiz del proyecto
       env_yml:
         required: false
         type: string
         default: environment.yml
+        description: Archivo de definición del entorno
 
 jobs:
   build:
