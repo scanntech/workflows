@@ -18,7 +18,7 @@ jobs:
         with:
           reviewdog_version: latest
       - name: Check workflow files
-        run: ${{ steps.get_actionlint.outputs.executable }} -no-color -oneline | reviewdog -reporter=github-pr-review -fail-on-error -f golint
+        run: ${{ steps.get_actionlint.outputs.executable }} -no-color -oneline | reviewdog -reporter=github-check -fail-on-error -f golint
         shell: bash
 
 #  reviewdog:
