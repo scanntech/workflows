@@ -3,7 +3,7 @@ on:
   push
 
 jobs:
-  actionlint:
+  actionlint_reviewdog:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,8 +11,11 @@ jobs:
         id: get_actionlint
         run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
         shell: bash
+      - uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
       - name: Check workflow files
-        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        run: ${{ steps.get_actionlint.outputs.executable }} -no-color -oneline | reviewdog -reporter=github-pr-review -fail-on-error -f golint
         shell: bash
 
 #  reviewdog:
