@@ -65,6 +65,24 @@ jobs:
       env_yml: environment.yml
 ```
 
+### lint-ds.yml
+
+Chequeo statico de archivos de workflows ft. actionlint.
+
+**Ejemplo de uso**
+```yaml
+# scanntech/otro-repo/.github/workflows/lint.yml
+name: Lint workflows
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/*.yml'
+jobs:
+  actionlint:
+    uses: scanntech/workflows/.github/workflows/lint-ds.yml@master
+```
+
 # Uso general
 
 - Desde dónde se puede llamar?
