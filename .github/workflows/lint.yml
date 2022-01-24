@@ -1,13 +1,10 @@
-name: reviewdog-actionlint
-
-on: [ pull_request ]
-
-#env:
-#  REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+name: Lint workflows
+on: 
+  pull_request:
+    paths:
+      - '.github/workflows/*.yml'
 
 jobs:
-  actionlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: reviewdog/action-actionlint@v1
+  lint_workflows:
+    uses: scanntech/workflows/.github/workflows/lint-ds.yml@master
+
