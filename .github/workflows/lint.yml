@@ -6,5 +6,5 @@ on:
 
 jobs:
   lint_workflows:
-    uses: scanntech/workflows/.github/workflows/lint-ds.yml@manual
+    uses: scanntech/workflows/.github/workflows/lint-ds.yml@master
 
