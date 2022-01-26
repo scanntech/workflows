@@ -65,7 +65,7 @@ jobs:
       env_yml: environment.yml
 ```
 
-### lint-ds.yml
+### lint-workflows-ds.yml
 
 Chequeo statico de archivos de workflows ft. actionlint.
 
