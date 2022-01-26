@@ -80,7 +80,7 @@ on:
       - '.github/workflows/*.yml'
 jobs:
   actionlint:
-    uses: scanntech/workflows/.github/workflows/lint-ds.yml@master
+    uses: scanntech/workflows/.github/workflows/lint-workflows-ds.yml@master
 ```
 
 # Uso general
