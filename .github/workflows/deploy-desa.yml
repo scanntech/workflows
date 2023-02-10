@@ -1,4 +1,4 @@
-name: Deploy en DS
+name: Deploy en desa
 
 on:
   workflow_call:
@@ -19,7 +19,7 @@ jobs:
     # requerimos también que la ruta de deploy sea absoluta
     if: (github.repository_owner == 'scanntech') && (startsWith(inputs.deploy_dir, '/'))
 
-    runs-on: [self-hosted, ds]
+    runs-on: [self-hosted, ds-desa]
 
     steps:
       - uses: actions/checkout@v2
